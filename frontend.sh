@@ -50,7 +50,7 @@ VALIDATE $? "Removing the default data"
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>> $LOG_FILE_NAME
 VALIDATE $? "Download the file"
 
-cd /usr/share/nginx/html
+cd /usr/share/nginx/html &>> $LOG_FILE_NAME
 
 unzip /tmp/frontend.zip &>> $LOG_FILE_NAME
 VALIDATE $? "Unzipping frontend file"
