@@ -2,6 +2,11 @@
 
 USERID=$(id -u)
 
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
 LOGS_FOLDER="/var/log/expense-logs"
 LOG_FILE=$(echo $0 | cut -d "." -f1)
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
@@ -27,6 +32,8 @@ CHECK_ROOT () {
        exit 1
     fi   
 }
+
+CHECK_ROOT
 
 dnf module disable nodejs -y &>> $LOG_FILE_NAME
 VALIDATE $? "Disabling default nodejs"
@@ -82,6 +89,3 @@ VALIDATE $? "Loading the mysql schema"
 
 systemctl restart backend &>> $LOG_FILE_NAME
 VALIDATE $? "Restarting backend"
-
-
-
