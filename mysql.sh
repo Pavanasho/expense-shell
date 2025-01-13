@@ -43,11 +43,11 @@ VALIDATE $? "Enabling mysql"
 systemctl start mysqld &>> $LOG_FILE_NAME
 VALIDATE $? "Starting mysql"
 
-mysql -h mysql.dpak.online -u root -pExpenseApp@1 -e 'show databases;'
+mysql -h mysql.dpak.online -u root -pExpenseApp@1 -e 'show databases;' &>> $LOG_FILE_NAME
 if [ $? -ne 0 ]
 then 
     mysql_secure_installation --set-root-pass ExpenseApp@1
     VALIDATE $? "Setting root password"
 else 
-    echo "Root password already set... $Y SKIPPING $N"
+    echo -e "Root password already set... $Y SKIPPING $N"
 fi
