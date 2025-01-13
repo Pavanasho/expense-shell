@@ -21,7 +21,7 @@ VALIDATE (){
     fi
 }
 
-#mkdir -p /var/log/expense-logs
+mkdir -p /var/log/expense-logs
 echo "Executing starts at: $TIMESTAMP" &>> $LOG_FILE_NAME
 
 CHECK_ROOT () {
@@ -31,6 +31,8 @@ CHECK_ROOT () {
         exit 1
     fi
 }
+
+CHECK_ROOT
 
 dnf install mysql-server -y &>> $LOG_FILE_NAME
 VALIDATE $? "Installing mysql-server"
@@ -43,8 +45,3 @@ VALIDATE $? "Starting mysql"
 
 mysql_secure_installation --set-root-pass ExpenseApp@1
 VALIDATE $? "Setting root password"
-
-
-
-
-
