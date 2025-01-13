@@ -54,8 +54,25 @@ VALIDATE $? "unzipping the downloaded"
 npm install
 VALIDATE $? "Installing dependencies"
 
-cp 
+cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
 
+systemctl daemon-reload
+VALIDATE $? "Daemon-reload"
+
+systemctl start backend
+VALIDATE $? "Starting backend"
+
+systemctl enable backend
+VALIDATE $? "Enabling backend"
+
+dnf install mysql -y
+VALIDATE $? "Installing mysql clint"
+
+mysql -h mysql.dpak.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
+VALIDATE $? "Loading the mysql schema"
+
+systemctl restart backend
+VALIDATE $? "Restarting backend"
 
 
 
