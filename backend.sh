@@ -37,10 +37,10 @@ VALIDATE $? "Enabling nodejs:20"
 dnf install nodejs -y &>> $LOG_FILE_NAME
 VALIDATE $? "Installing nodejs"
 
-useradd expense
+useradd expense &>> $LOG_FILE_NAME
 VALIDATE $? "adding expense user"
 
-mkdir /app
+mkdir /app &>> $LOG_FILE_NAME
 VALIDATE $? "app directory creation"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
@@ -48,30 +48,30 @@ VALIDATE $? "app download"
 
 cd /app
 
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>> $LOG_FILE_NAME
 VALIDATE $? "unzipping the downloaded"
 
-npm install
+npm install &>> $LOG_FILE_NAME
 VALIDATE $? "Installing dependencies"
 
 cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
 
-systemctl daemon-reload
+systemctl daemon-reload &>> $LOG_FILE_NAME
 VALIDATE $? "Daemon-reload"
 
-systemctl start backend
+systemctl start backend &>> $LOG_FILE_NAME
 VALIDATE $? "Starting backend"
 
-systemctl enable backend
+systemctl enable backend &>> $LOG_FILE_NAME
 VALIDATE $? "Enabling backend"
 
-dnf install mysql -y
+dnf install mysql -y &>> $LOG_FILE_NAME
 VALIDATE $? "Installing mysql clint"
 
-mysql -h mysql.dpak.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h mysql.dpak.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>> $LOG_FILE_NAME
 VALIDATE $? "Loading the mysql schema"
 
-systemctl restart backend
+systemctl restart backend &>> $LOG_FILE_NAME
 VALIDATE $? "Restarting backend"
 
 
